@@ -1,0 +1,170 @@
+[tool.poetry]
+name = "murdle_solver"
+version = "0.1.0"
+description = "Solve murdle like puzzles."
+authors = ["Charles Bevan <cfbevan@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pydantic = "^2.9.2"
+click = "^8.1.7"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.7.1"
+pytest = "^8.3.3"
+poethepoet = "^0.29.0"
+pre-commit = "^4.0.1"
+mypy = "^1.13.0"
+pytest-cov = "^5.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+pre-commit = "pre-commit run --all-files --hook-stage=manual"
+pytest.shell = "ENV=test poetry run pytest --cov --cov-report term-missing tests -vv"
+test = ["pre-commit", "pytest"]
+cli.script = "murdle_solver.cli:solve"
+
+[tool.ruff]
+exclude = [
+    ".git",
+    ".git-rewrite",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".venv",
+    ".vscode",
+    "__pycache__",
+    "__pypackages__",
+]
+line-length = 100
+indent-width = 4
+target-version = "py311"
+
+[tool.ruff.lint]
+# https://docs.astral.sh/ruff/rules
+select = [
+    "F",
+    "E",
+    "W",
+    "C90",
+    "I",
+    "N",
+    "D",
+    "UP",
+    "ANN",
+    "ASYNC",
+    "S",
+    "BLE",
+    "B",
+    "A",
+    "COM",
+    "C4",
+    "DTZ",
+    "T10",
+    "ISC",
+    "ICN",
+    "LOG",
+    "G",
+    "INP",
+    "PIE",
+    "T20",
+    "PT",
+    "Q",
+    "RSE",
+    "RET",
+    "SLF",
+    "SLOT",
+    "SIM",
+    "TID",
+    "INT",
+    "ARG",
+    "PTH",
+    "ERA",
+    "PGH",
+    "PLC",
+    "PLE",
+    "PLR",
+    "PLW",
+    "TRY",
+    "FLY",
+    "PERF",
+    "RUF",
+]
+ignore = [
+    "W505",
+    "ANN101",
+    "ANN102",
+    "D100",
+    "D101",
+    "D104",
+    "ISC001",
+    "COM812",
+]
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"typing.TypedDict".msg = "Use typing_extensions.TypedDict instead."
+
+[tool.ruff.lint.isort]
+force-single-line = true
+force-to-top = ["typing"]
+lines-after-imports = 2
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402"]
+"**/{tests,docs,tools}/*" = ["S101", "S104", "S106"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = false
+docstring-code-line-length = "dynamic"
+
+[tool.coverage.paths]
+sources = ["murdle_solver"]
+tests = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["murdle_solver"]
+omit = ["__main__.py", "cli.py", "config_loader.py"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 95
+
+[tool.mypy]
+ignore_missing_imports = true
+strict = false
+warn_unreachable = true
+pretty = true
+show_column_numbers = true
+show_error_codes = true
+show_error_context = true
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+warn_redundant_casts = true
+warn_unused_ignores = false
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+disallow_any_generics = false

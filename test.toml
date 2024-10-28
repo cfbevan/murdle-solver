@@ -1,0 +1,12 @@
+groups = [["a", "b"], ["c", "d"]]
+
+[[rules]]
+op = "not"
+
+[rules.right]
+op = "fact"
+right = ["a", "*"]
+
+[[rules]]
+op = "fact"
+right = ["*", "d"]
