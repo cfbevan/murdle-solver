@@ -4,15 +4,15 @@ from murdle_solver.rules import BinaryRule
 from murdle_solver.rules import Fact
 from murdle_solver.rules import Rule
 from murdle_solver.rules import UnaryRule
-from murdle_solver.solutions import Solutions
+from murdle_solver.solutions import gen_solutions
 
 
-def solve(rule: Rule, solution: list[str]) -> bool:
+def solve(rule: Rule, solution: tuple[tuple[str, ...]]) -> bool:
     """Check if given solution matches rule.
 
     Args:
         rule (Rule): Rule to test.
-        solution (list[str]): Solution to test.
+        solution (tuple[tuple[str, ...]]): Solution to test.
 
     Returns:
         bool: Boolean value of solution applied to rule.
@@ -31,25 +31,25 @@ def solve(rule: Rule, solution: list[str]) -> bool:
             return _xor(cast(BinaryRule, rule), solution)
 
 
-def _fact(rule: Fact, solution: list[str]) -> bool:
+def _fact(rule: Fact, solution: tuple[tuple[str, ...]]) -> bool:
     """A fact is a given truth.
 
     Args:
         rule (Rule): Rule to test.
-        solution (list[str]): Solution to test.
+        solution (tuple[tuple[str, ...]]): Solution to test.
 
     Returns:
         bool: True if rule fact matches solution.
     """
-    return all(r == "*" or r == solution[i] for i, r in enumerate(rule["right"]))
+    return any(all(r == "*" or r == s[i] for i, r in enumerate(rule["right"])) for s in solution)
 
 
-def _not(rule: UnaryRule, solution: list[str]) -> bool:
+def _not(rule: UnaryRule, solution: tuple[tuple[str, ...]]) -> bool:
     """Evaluate not Rule.
 
     Args:
         rule (Rule): Rule to test.
-        solution (list[str]): Solution to test.
+        solution (tuple[tuple[str, ...]]): Solution to test.
 
     Returns:
         bool: True if not Right.
@@ -57,12 +57,12 @@ def _not(rule: UnaryRule, solution: list[str]) -> bool:
     return not solve(rule["right"], solution)
 
 
-def _or(rule: BinaryRule, solution: list[str]) -> bool:
+def _or(rule: BinaryRule, solution: tuple[tuple[str, ...]]) -> bool:
     """Evaluate or Rule.
 
     Args:
         rule (Rule): Rule to test.
-        solution (list[str]): Solution to test.
+        solution (tuple[tuple[str, ...]]): Solution to test.
 
     Returns:
         bool: True if Left OR Right.
@@ -70,12 +70,12 @@ def _or(rule: BinaryRule, solution: list[str]) -> bool:
     return solve(rule["left"], solution) or solve(rule["right"], solution)
 
 
-def _and(rule: BinaryRule, solution: list[str]) -> bool:
+def _and(rule: BinaryRule, solution: tuple[tuple[str, ...]]) -> bool:
     """Evaluate and Rule.
 
     Args:
         rule (Rule): Rule to test.
-        solution (list[str]): Solution to test.
+        solution (tuple[tuple[str, ...]]): Solution to test.
 
     Returns:
         bool: True if Left AND Right.
@@ -83,12 +83,12 @@ def _and(rule: BinaryRule, solution: list[str]) -> bool:
     return solve(rule["left"], solution) and solve(rule["right"], solution)
 
 
-def _xor(rule: BinaryRule, solution: list[str]) -> bool:
+def _xor(rule: BinaryRule, solution: tuple[tuple[str, ...]]) -> bool:
     """Evaluate and Rule.
 
     Args:
         rule (Rule): Rule to test.
-        solution (list[str]): Solution to test.
+        solution (tuple[tuple[str, ...]]): Solution to test.
 
     Returns:
         bool: True if Left AND Right.
@@ -104,14 +104,14 @@ class Solver:
             groups (list[list[str]]): Groups of items to create solutions with.
             rules (list[Rule]): Rules for solutions.
         """
-        self.solutions = list(Solutions(groups))
+        self.solutions = gen_solutions(groups)
         self.rules = rules
 
-    def solve(self) -> list[list[str]]:
+    def solve(self) -> list[tuple[tuple[str, ...]]]:
         """Get possible solutions based on rules.
 
         Returns:
-            list[list[str]]: All solutions.
+            list[tuple[tuple[str, ...]]]: All solutions.
         """
         return [
             solution

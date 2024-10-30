@@ -1,31 +1,53 @@
-from murdle_solver.solutions import Solutions
+from murdle_solver.solutions import gen_solutions
 
 
-def test_solutions_even() -> None:
+def test_solutions_two() -> None:
     """Test the solutions generation."""
     groups = [["a", "b"], ["c", "d"]]
-    assert list(Solutions(groups)) == [
-        ["a", "c"],
-        ["a", "d"],
-        ["b", "c"],
-        ["b", "d"],
+    assert list(gen_solutions(groups)) == [
+        (("a", "c"), ("b", "d")),
+        (("a", "d"), ("b", "c")),
     ]
 
 
-def test_solutions_uneven() -> None:
+def test_solutions_three() -> None:
     """Test the solutions generation."""
-    groups = [["x", "y"], ["a", "b", "z"], ["c", "d"]]
-    assert list(Solutions(groups)) == [
-        ["x", "a", "c"],
-        ["x", "a", "d"],
-        ["x", "b", "c"],
-        ["x", "b", "d"],
-        ["x", "z", "c"],
-        ["x", "z", "d"],
-        ["y", "a", "c"],
-        ["y", "a", "d"],
-        ["y", "b", "c"],
-        ["y", "b", "d"],
-        ["y", "z", "c"],
-        ["y", "z", "d"],
+    groups = [["a", "b", "c"], ["d", "e", "f"], ["g", "h", "i"]]
+    assert list(gen_solutions(groups)) == [
+        (("a", "d", "g"), ("b", "e", "h"), ("c", "f", "i")),
+        (("a", "d", "g"), ("b", "e", "i"), ("c", "f", "h")),
+        (("a", "d", "g"), ("b", "f", "h"), ("c", "e", "i")),
+        (("a", "d", "g"), ("b", "f", "i"), ("c", "e", "h")),
+        (("a", "d", "h"), ("b", "e", "g"), ("c", "f", "i")),
+        (("a", "d", "h"), ("b", "e", "i"), ("c", "f", "g")),
+        (("a", "d", "h"), ("b", "f", "g"), ("c", "e", "i")),
+        (("a", "d", "h"), ("b", "f", "i"), ("c", "e", "g")),
+        (("a", "d", "i"), ("b", "e", "g"), ("c", "f", "h")),
+        (("a", "d", "i"), ("b", "e", "h"), ("c", "f", "g")),
+        (("a", "d", "i"), ("b", "f", "g"), ("c", "e", "h")),
+        (("a", "d", "i"), ("b", "f", "h"), ("c", "e", "g")),
+        (("a", "e", "g"), ("b", "d", "h"), ("c", "f", "i")),
+        (("a", "e", "g"), ("b", "d", "i"), ("c", "f", "h")),
+        (("a", "e", "g"), ("b", "f", "h"), ("c", "d", "i")),
+        (("a", "e", "g"), ("b", "f", "i"), ("c", "d", "h")),
+        (("a", "e", "h"), ("b", "d", "g"), ("c", "f", "i")),
+        (("a", "e", "h"), ("b", "d", "i"), ("c", "f", "g")),
+        (("a", "e", "h"), ("b", "f", "g"), ("c", "d", "i")),
+        (("a", "e", "h"), ("b", "f", "i"), ("c", "d", "g")),
+        (("a", "e", "i"), ("b", "d", "g"), ("c", "f", "h")),
+        (("a", "e", "i"), ("b", "d", "h"), ("c", "f", "g")),
+        (("a", "e", "i"), ("b", "f", "g"), ("c", "d", "h")),
+        (("a", "e", "i"), ("b", "f", "h"), ("c", "d", "g")),
+        (("a", "f", "g"), ("b", "d", "h"), ("c", "e", "i")),
+        (("a", "f", "g"), ("b", "d", "i"), ("c", "e", "h")),
+        (("a", "f", "g"), ("b", "e", "h"), ("c", "d", "i")),
+        (("a", "f", "g"), ("b", "e", "i"), ("c", "d", "h")),
+        (("a", "f", "h"), ("b", "d", "g"), ("c", "e", "i")),
+        (("a", "f", "h"), ("b", "d", "i"), ("c", "e", "g")),
+        (("a", "f", "h"), ("b", "e", "g"), ("c", "d", "i")),
+        (("a", "f", "h"), ("b", "e", "i"), ("c", "d", "g")),
+        (("a", "f", "i"), ("b", "d", "g"), ("c", "e", "h")),
+        (("a", "f", "i"), ("b", "d", "h"), ("c", "e", "g")),
+        (("a", "f", "i"), ("b", "e", "g"), ("c", "d", "h")),
+        (("a", "f", "i"), ("b", "e", "h"), ("c", "d", "g")),
     ]

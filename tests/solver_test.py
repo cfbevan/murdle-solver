@@ -10,15 +10,11 @@ def test_solver_not() -> None:
             "op": "not",
             "right": {
                 "op": "fact",
-                "right": ["a", "*"],
+                "right": ["a", "c"],
             },
         },
-        {
-            "op": "fact",
-            "right": ["*", "d"],
-        },
     ]
-    assert Solver(groups, rules).solve() == [["b", "d"]]
+    assert Solver(groups, rules).solve() == [(("a", "d"), ("b", "c"))]
 
 
 def test_solver_and() -> None:
@@ -29,15 +25,15 @@ def test_solver_and() -> None:
             "op": "and",
             "left": {
                 "op": "fact",
-                "right": ["*", "d"],
+                "right": ["b", "d"],
             },
             "right": {
                 "op": "fact",
-                "right": ["a", "*"],
+                "right": ["a", "c"],
             },
         },
     ]
-    assert Solver(groups, rules).solve() == [["a", "d"]]
+    assert Solver(groups, rules).solve() == [(("a", "c"), ("b", "d"))]
 
 
 def test_solver_or() -> None:
@@ -48,19 +44,15 @@ def test_solver_or() -> None:
             "op": "or",
             "left": {
                 "op": "fact",
-                "right": ["*", "d"],
+                "right": ["b", "d"],
             },
             "right": {
                 "op": "fact",
-                "right": ["a", "*"],
+                "right": ["a", "c"],
             },
         },
     ]
-    assert Solver(groups, rules).solve() == [
-        ["a", "c"],
-        ["a", "d"],
-        ["b", "d"],
-    ]
+    assert Solver(groups, rules).solve() == [(("a", "c"), ("b", "d"))]
 
 
 def test_solver_xor() -> None:
@@ -71,15 +63,12 @@ def test_solver_xor() -> None:
             "op": "xor",
             "left": {
                 "op": "fact",
-                "right": ["*", "d"],
+                "right": ["a", "d"],
             },
             "right": {
                 "op": "fact",
-                "right": ["a", "*"],
+                "right": ["a", "c"],
             },
         },
     ]
-    assert Solver(groups, rules).solve() == [
-        ["a", "c"],
-        ["b", "d"],
-    ]
+    assert Solver(groups, rules).solve() == [(("a", "c"), ("b", "d")), (("a", "d"), ("b", "c"))]

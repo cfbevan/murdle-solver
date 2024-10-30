@@ -5,8 +5,4 @@ op = "not"
 
 [rules.right]
 op = "fact"
-right = ["a", "*"]
-
-[[rules]]
-op = "fact"
-right = ["*", "d"]
+right = ["a", "c"]

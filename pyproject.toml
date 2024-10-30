@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "murdle_solver"
-version = "0.1.0"
+version = "0.1.1"
 description = "Solve murdle like puzzles."
 authors = ["Charles Bevan <cfbevan@gmail.com>"]
 license = "MIT"
@@ -11,6 +11,7 @@ package-mode = false
 python = "^3.11"
 pydantic = "^2.9.2"
 click = "^8.1.7"
+more-itertools = "^10.5.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.7.1"
