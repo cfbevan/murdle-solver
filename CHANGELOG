@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Rule parser that allows lisp like syntax.
+
 ### Changed
 
 - Fix how solutions are generated and handled.

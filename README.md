@@ -28,17 +28,7 @@ Example
 
 ```toml
 groups = [["a", "b"], ["c", "d"]]
-
-[[rules]]
-op = "not"
-
-[rules.right]
-op = "fact"
-right = ["a", "*"]
-
-[[rules]]
-op = "fact"
-right = ["*", "d"]
+rules = ['( not ("a" "*"))', '("*" "d")']
 ```
 
 ### Groups
@@ -83,54 +73,31 @@ groups = [
 **person2 brought weapon1**
 
 ```toml
-[[rules]]
-op="fact"
-right = ["person2", "weapon1", "*"]
+rules = ['("person2" "weapon1" "*")']
 ```
 
 **person1 was at place2**
 
 ```toml
-[[rules]]
-op="fact"
-right = ["person2", "*", "place2"]
+rules = ['("person2" "*" "place2")']
 ```
 
 **nobody put weapon1 at place3**
 
 ```toml
-[[rules]]
-op = "not"
-
-[rules.right]
-op = "fact"
-right = ["*", "weapon1", "place3"]
+rules = ['(not ("*" "weapon1" "place3"))']
 ```
 
 ***person1 admired the person who brought weapon2**
 
 ```toml
-[[rules]]
-op = "not"
-
-[rules.right]
-op = "fact"
-right = ["person1", "weapon2", "*"]
+rules = ['(not ("person1" "weapon2" "*"))']
 ```
 
 **either person1 brought weapon2 or weapon2 was at place1**
 
 ```toml
-[[rules]]
-op = "xor"
-
-[rules.left]
-op = "fact"
-right = ["person1", "weapon2", "*"]
-
-[rules.right]
-op = "fact"
-right = ["*", "weapon2", "place1"]
+rules = ['(xor ("person" "weapon2" "*") ("*" "weapon2" "place1"))']
 ```
 
 ## Development

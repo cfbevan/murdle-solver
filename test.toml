@@ -1,8 +1,2 @@
 groups = [["a", "b"], ["c", "d"]]
-
-[[rules]]
-op = "not"
-
-[rules.right]
-op = "fact"
-right = ["a", "c"]
+rules = ['( not ("a" "c"))']

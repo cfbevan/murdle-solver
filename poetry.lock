@@ -312,6 +312,17 @@ dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
+name = "ply"
+version = "3.11"
+description = "Python Lex & Yacc"
+optional = false
+python-versions = "*"
+files = [
+    {file = "ply-3.11-py2.py3-none-any.whl", hash = "sha256:096f9b8350b65ebd2fd1346b12452efe5b9607f7482813ffca50c22722a807ce"},
+    {file = "ply-3.11.tar.gz", hash = "sha256:00c7c1aaa88358b9c765b6d3000c6eec0ba42abca5351b095321aef446081da3"},
+]
+
+[[package]]
 name = "poethepoet"
 version = "0.29.0"
 description = "A task runner that works well with poetry."
@@ -632,4 +643,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "eccf5b39ffbf6e7035826952b25250284bad4e7a67d3ac4d7d779c7e0ac70b81"
+content-hash = "b6d4c9f44f712367af72119be4e8c7e477d40856b1aa5b7f1772c9ad7b25b0c6"

@@ -12,6 +12,7 @@ python = "^3.11"
 pydantic = "^2.9.2"
 click = "^8.1.7"
 more-itertools = "^10.5.0"
+ply = "^3.11"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.7.1"
@@ -42,6 +43,7 @@ exclude = [
     ".vscode",
     "__pycache__",
     "__pypackages__",
+    "parsetab.py",
 ]
 line-length = 100
 indent-width = 4
@@ -126,6 +128,8 @@ lines-after-imports = 2
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["E402"]
 "**/{tests,docs,tools}/*" = ["S101", "S104", "S106"]
+"murdle_solver/rule_yacc.py" = ["D", "Q002"]
+"murdle_solver/rule_lex.py" = ["D", "N816"]
 
 [tool.ruff.format]
 quote-style = "double"
