@@ -1,3 +1,5 @@
+import pytest
+
 from murdle_solver.rules import Rule
 from murdle_solver.solver import Solver
 
@@ -72,3 +74,19 @@ def test_solver_xor() -> None:
         },
     ]
     assert Solver(groups, rules).solve() == [(("a", "c"), ("b", "d")), (("a", "d"), ("b", "c"))]
+
+
+def test_solver_bad_op() -> None:
+    """End to end test of simple solution."""
+    groups = [["a", "b"], ["c", "d"]]
+    rules = [
+        {
+            "op": "bad",
+            "right": {
+                "op": "fact",
+                "right": ["a", "c"],
+            },
+        },
+    ]
+    with pytest.raises(ValueError, match="Unknown operator: bad"):
+        Solver(groups, rules).solve()  # type: ignore[arg-type]

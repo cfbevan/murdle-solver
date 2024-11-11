@@ -29,6 +29,8 @@ def solve(rule: Rule, solution: tuple[tuple[str, ...]]) -> bool:
             return _or(cast(BinaryRule, rule), solution)
         case "xor":
             return _xor(cast(BinaryRule, rule), solution)
+        case _:
+            raise ValueError(f"Unknown operator: {rule['op']}")
 
 
 def _fact(rule: Fact, solution: tuple[tuple[str, ...]]) -> bool:
